@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Rendez-vous<h1>
+
+<h2>Vos rendez-vous à venir</h2>
+<br>
+   {% for appointment in appointments %}
+   {% if not appointment.is_past_due %}
+   <div class = "appointment">
+     <p>Jour du rendez-vous : {{ appointment.get_date_display }}</p>
+     <p>Heure du rendez-vous : {{ appointment.get_heure_display }}</p>
+     {% if appointment.objet %}
+       <p>Objet du rendez-vous : {{ appointment.objet }}</p>
+     {% endif %}
+      <a href="{% url 'appointment-change' appointment.id %}">Modifier ce rendez-vous</a>
+      <a href="{% url 'appointment-delete' appointment.id %}">Annuler ce rendez-vous</a>
+      <br>
+   </div>
+   {% endif %}
+   {% endfor %}
+<br>
+<h2>Vos rendez-vous passés</h2>
+<br>
+   {% for appointment in appointments %}
+   {% if appointment.is_past_due %}
+   <div class = "appointment">
+     <p>Jour du rendez-vous : {{ appointment.get_date_display }}</p>
+     <p>Heure du rendez-vous : {{ appointment.get_heure_display }}</p>
+     {% if appointment.objet %}
+       <p>Objet du rendez-vous : {{ appointment.objet }}</p>
+     {% endif %}
+   </div>
+   {% endif %}
+   {% endfor %}
+<br>
+{% endblock content%}

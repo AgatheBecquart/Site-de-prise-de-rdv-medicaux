@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if notes %}
+  <h1>Historique des observations suite aux séances avec {{ user.username }}</h1>
+  <ul>
+    {% for note in notes %}
+      <li>{{ note.text }} ({{ note.created_date|date:"d/m/Y H:i" }})</li> <br>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Pas de notes pour cet utilisateur.</p>
+{% endif %}
+<form method="post">
+  {% csrf_token %}
+  {{ note_form.as_p }}
+  <button type="submit">Enregistrer</button>
+</form>
+{% endblock %}

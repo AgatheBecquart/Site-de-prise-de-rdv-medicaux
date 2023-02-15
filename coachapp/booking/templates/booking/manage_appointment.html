@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="manage">
+<h1> Rendez-vous </h1> <br>
+<h2>Vos rendez-vous à venir</h2>
+<br>
+   {% for appointment in appointments %}
+   {% if not appointment.is_past_due %}
+   <div class = "appointment">
+        <p>Cliente : {{ appointment.user }}</p>
+        <p>Jour du rendez-vous : {{ appointment.get_date_display }}</p>
+        <p>Heure du rendez-vous : {{ appointment.get_heure_display }}</p>
+        {% if appointment.objet %}
+        <p>Objet du rendez-vous : {{ appointment.objet }}</p>
+        {% endif %}
+        <p>Date d'enregistrement du rendez-vous : {{ appointment.time_ordered }}</p>
+        <a href="{% url 'appointment-change' appointment.id %}">Modifier ce rendez-vous</a>
+        <a href="{% url 'appointment-delete' appointment.id %}">Annuler ce rendez-vous</a> <br> <br>
+        <a href="{% url 'appointment-detail' appointment.id %}">Historique des séances avec {{ appointment.user }}</a>
+        <br>
+    </div>
+    {% endif %}
+    {% endfor %}
+<br>
+<br>
+<h2>Vos rendez-vous passés</h2>
+<br>
+    {% for appointment in appointments %}
+    {% if appointment.is_past_due %}
+    <div class = "appointment">
+        <p>Cliente : {{ appointment.user }}</p>
+        <p>Jour du rendez-vous : {{ appointment.get_date_display }}</p>
+        <p>Heure du rendez-vous : {{ appointment.get_heure_display }}</p>
+        {% if appointment.objet %}
+        <p>Objet du rendez-vous : {{ appointment.objet }}</p>
+        {% endif %}
+        {% if appointment.note %}
+        <p>Note : {{ appointment.note }}</p>
+        {% endif %}
+        <a href="{% url 'appointment-detail' appointment.id %}">Historique des séances avec {{ appointment.user }}</a>
+    
+        <br>
+    </div>
+    {% endif %}
+    {% endfor %}
+<br>
+</div>
+{% endblock content%}

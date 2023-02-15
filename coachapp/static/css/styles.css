@@ -1,0 +1,220 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    width: 100%; 
+    margin: auto;
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+}
+
+main {
+    padding-top: 3%;
+    padding-bottom: 100px; 
+}
+
+.nav1 {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    background-color: #475B63;
+    height: 30px ;
+}
+
+.nav1 ul{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin-right: 20px;
+}
+
+.nav1 li{
+    font-size: 20; 
+    color: white;
+    padding: 10px;
+}
+
+.nav2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F6F6F6
+}
+
+.nav2 ul{
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin-right: 20px;
+}
+
+.nav2 li{
+    list-style: none;
+    padding-right: 10px;
+}
+
+.nav2 a{
+    text-decoration: none;
+    font-size: 20; 
+    color: #475B63;
+}
+
+figure img{
+    width: 150px;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+article figure img{
+    width: 550px;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.accueil {
+    margin-top: -3%;
+    background-image: url("https://www.cforpro.com/images/formation-prise-de-parole.jpg");
+    background-size: cover;
+    background-position: center 50%;
+    background-repeat: no-repeat;
+    height: 100%;
+    object-fit: cover;
+}
+
+header::before {
+    content: "|";
+    height: 110%;
+    background-color: black;
+    float: left;
+    margin-right: 20px; 
+}
+  
+header {
+    max-width: 800px;
+    margin-left: 35%;
+    padding-top: 50px;
+    height: 230px;
+    text-align: left;
+}
+  
+h1{
+    font-size: 45px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+
+p {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: black;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #475B63;
+    height: 100px ;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a{
+    color: white;
+}
+
+footer p{
+    color: white;
+}
+
+form {
+    width: 30%;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+  
+label {
+    font-weight: bold;
+}
+  
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    font-size: 20px;
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+button {
+    background-color: #A7CDCC;
+    color: #475B63;
+    border: 1px solid #475B63;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="submit"] {
+    background-color: #A7CDCC;
+    color: #475B63;
+    border: 1px solid #475B63;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.contact {
+   padding: 3% ;
+}
+
+
+section{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+section p {
+    padding: 3%;
+}
+
+#coaching{
+    width:50%;
+    border-radius: 10px;
+}
+
+a{
+    color: #475B63;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.appointment{
+    padding: 2%;
+}
+
+h2{
+    font-size: 24px;
+    text-decoration: underline;
+}
+
+#welcome{
+    width:25%
+}

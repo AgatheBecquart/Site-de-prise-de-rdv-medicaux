@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% if request.user.role != 'MEDECIN' %}
+    <h1>BIENVENUE !</h1>
+    <p>
+        Vous êtes bien connecté à ma superbe plateforme de rendez-vous! <br>
+        Ici vous pourrez prendre, consulter et modifier tous les rendez-vous qui vont oeuvrer pour votre changement de vie !
+    </p>
+    {% endif %}
+    {% if request.user.role == 'MEDECIN' %}
+    <h1>BIENVENUE COACH !</h1>
+    <p>
+        Vous êtes bien connecté à votre plateforme de rendez-vous! <br>
+        Ici vous pourrez prendre des rendez-vous pour vos clients, consulter et modifier tous les rendez-vous qui vont oeuvrer pour leur changement de vie ! <br>
+        Vous aurez également accès à un historique de chaque patient que vous pourrez compléter à chaque fin de séance. 
+    <p>
+    {% endif %}
+    <img id="welcome" src="{% static 'img/welcome.jpg' %}" alt="welcome"></img>
+{% endblock content %}

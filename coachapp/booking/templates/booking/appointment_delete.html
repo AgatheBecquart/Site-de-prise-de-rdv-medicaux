@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Annuler le rendez-vous</h1>
+
+<p>Etes-vous sûr de vouloir annuler le rendez-vous ?</p>
+
+<form action="" method="post">
+{% csrf_token %}
+<input type="submit" value="Supprimer">
+</form>
+
+{% endblock %}

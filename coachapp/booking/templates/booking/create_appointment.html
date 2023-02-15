@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post">
+  {% if form.errors %}
+    <ul>
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% csrf_token %}
+  <p>
+    {% if request.user.role == 'MEDECIN' %}
+    <label for="{{ form.client.id_for_label }}"> Client :</label>
+    {{ form.client }}
+    {% endif %}
+  </p>
+  <p>
+    <label for="{{ form.date.id_for_label }}">Date du rendez-vous :</label>
+    {{ form.date }}
+  </p>
+  <p>
+    <label for="{{ form.heure.id_for_label }}">Heure du rendez-vous :</label>
+    {{ form.heure }}
+  </p>
+  <p>
+    <label for="{{ form.objet.id_for_label }}">Quel est l'objet du rendez-vous ? :</label>
+    {{ form.objet }}
+  </p>
+  
+  <button type="submit">Enregistrer</button>
+</form>
+  
+{% endblock content%}

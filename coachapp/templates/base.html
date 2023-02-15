@@ -1,0 +1,59 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Coachapp</title>
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    </head>
+    <body> 
+        <nav>
+            <div class="nav1">
+                <ul>
+                    <li> ✉ edouardbaert@coachmoi.fr</li>
+                    <li>☎0610101010</li>
+                <ul>
+            </div>
+            <div class="nav2">
+                <figure>
+                    <a href="{% url 'accueil' %}">
+                        <img src="{% static 'img/logo_transparent.png' %}" alt="logo">
+                    </a>
+                </figure>
+                <ul>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.role == 'MEDECIN' %}
+                
+                        <li><a href="{% url 'manage' %}">Gerer mes rendez-vous</a></li>
+                        <li><a href="{% url 'logout' %}">Se déconnecter</a>
+                        {% else %}
+                        <li><a href="{% url 'booking' %}">Prendre un rendez-vous</a></li>
+                        <li><a href="{% url 'consult' %}">Consulter mes rendez-vous</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'about' %}">A propos</a></li>
+                        <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'about' %}">A propos</a></li>
+                        <li><a href="{% url 'login' %}">Se connecter</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <main>
+        {% block content %}{% endblock content %}
+        </main>
+        <footer>
+        {% if user.is_authenticated %}
+            <p>
+                Vous êtes connecté en tant que {{ request.user }}
+                <a href="{% url 'logout' %}">Se déconnecter</a>
+            </p>
+        {% endif %}
+        </footer>
+    </body>
+</html>
