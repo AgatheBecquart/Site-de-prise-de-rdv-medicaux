@@ -9,12 +9,6 @@ def logout_user(request):
     """Cette fonction permet à l'utilisateur actuellement connecté de se déconnecter du système.
 
     Elle appelle la méthode logout() de Django pour vider la session de l'utilisateur en cours, puis redirige l'utilisateur vers la page de connexion.
-
-    Paramètres:
-    - request (HttpRequest): L'objet de requête HTTP envoyé par le client.
-
-    Retour:
-    - HttpResponseRedirect : Un objet de réponse HTTP qui redirige l'utilisateur vers la page de connexion.
     """
     logout(request)
     return redirect('login')
@@ -31,12 +25,6 @@ class LoginPageView(LoginRequiredMixin, View):
     Méthodes:
     - get(self, request): Cette méthode est appelée lorsque l'utilisateur accède à la page de connexion. Elle renvoie le formulaire LoginForm vide et un message vide à afficher.
     - post(self, request): Cette méthode est appelée lorsque l'utilisateur soumet le formulaire LoginForm. Elle vérifie si les informations d'identification de l'utilisateur sont valides, authentifie l'utilisateur et le redirige vers la page d'accueil s'il est authentifié avec succès. Sinon, elle affiche un message d'erreur et renvoie le formulaire LoginForm rempli avec les informations fournies par l'utilisateur.
-
-    Paramètres:
-    - request (HttpRequest): L'objet de requête HTTP envoyé par le client.
-
-    Retour:
-    - HttpResponse : Un objet de réponse HTTP qui affiche la page de connexion avec le formulaire LoginForm et éventuellement un message d'erreur si l'authentification échoue.
     """
     template_name = 'authentication/login.html'
     form_class = forms.LoginForm
@@ -65,9 +53,6 @@ def signup_page(request):
     """Cette fonction gère la vue de la page d'inscription du système.
 
     Elle utilise un formulaire SignupForm pour collecter les informations de l'utilisateur et les envoyer au serveur pour créer un nouveau compte d'utilisateur.
-
-    Paramètres :
-    - request (HttpRequest) : L'objet de requête HTTP envoyé par le client.
 
     Retour :
     - HttpResponse : Un objet de réponse HTTP qui affiche la page d'inscription avec le formulaire SignupForm rempli par l'utilisateur si le formulaire n'est pas valide, ou redirige l'utilisateur vers la page de connexion s'il est inscrit avec succès.

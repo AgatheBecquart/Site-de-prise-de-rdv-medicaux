@@ -11,15 +11,7 @@ User = get_user_model()
         
 
 class Appointment(models.Model):
-    """La classe Appointment représente un modèle de rendez-vous avec les champs suivants :
-
-    client: un champ de caractères qui stocke le nom du client (facultatif)
-    user: une clé étrangère qui pointe vers le modèle User (défini par la fonction get_user_model()) et qui stocke l'utilisateur associé à ce rendez-vous (facultatif)
-    date: un champ de caractères qui stocke la date du rendez-vous, choisie parmi les options du champ DAY_CHOICES 
-    heure: un champ de caractères qui stocke l'heure du rendez-vous, choisie parmi les options du champ TIME_CHOICES 
-    objet: un champ de caractères qui stocke l'objet du rendez-vous (facultatif)
-    time_ordered: un champ DateTimeField qui stocke la date et l'heure de création du rendez-vous (par défaut timezone.now())
-
+    """La classe Appointment représente un modèle de rendez-vous.
     La classe a également les méthodes suivantes :
 
     clean: méthode qui vérifie que l'horaire du rendez-vous n'est pas déjà pris par un autre rendez-vous pour la même date et lève une exception ValidationError si c'est le cas
@@ -45,7 +37,7 @@ class Appointment(models.Model):
     ("16:30 - 16:50", "16h30 - 16h50"),
 )
 
-    today = pd.Timestamp.now().floor('D') + pd.Timedelta(days=1)  # commencer à partir du lendemain, ajouter 1 jour
+    today = pd.Timestamp.now().floor('D') + pd.Timedelta(days=1)  # commencer à partir du lendemain
     DAY_CHOICES = []
     for i in range(12):
         day = today + pd.Timedelta(days=i)
@@ -55,8 +47,8 @@ class Appointment(models.Model):
         
     client = models.CharField(max_length=20,null=True, blank=True)   
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    date = models.CharField(max_length=30, choices=DAY_CHOICES)
-    heure = models.CharField(max_length=50, choices=TIME_CHOICES)
+    date = models.CharField(max_length=30, choices=DAY_CHOICES, default=DAY_CHOICES[0][0])
+    heure = models.CharField(max_length=50, choices=TIME_CHOICES, default=TIME_CHOICES[0][0])
     objet = models.CharField(max_length=255,null=True, blank=True)
     time_ordered = models.DateTimeField(default=timezone.now, blank=True)
     

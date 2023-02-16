@@ -14,9 +14,6 @@ def contact(request):
 
     Paramètres :
     - request (HttpRequest) : L'objet de requête HTTP envoyé par le client.
-
-    Retour :
-    - HttpResponse : Un objet de réponse HTTP qui affiche la page de contact avec le formulaire ContactUsForm rempli par l'utilisateur si la méthode de requête HTTP est GET, ou traite les données envoyées par l'utilisateur et redirige l'utilisateur vers une page de confirmation si la méthode de requête HTTP est POST.
     """
     if request.method == 'POST':
         form = ContactUsForm(request.POST)

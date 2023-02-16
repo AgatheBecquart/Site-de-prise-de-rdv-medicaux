@@ -7,10 +7,6 @@ from .models import Appointment, Note
 def create_appointment(request):
     """
     Permet à un utilisateur connecté de créer un nouveau rendez-vous. Si la méthode de la requête est POST, vérifie la validité des données du formulaire de rendez-vous. Si le formulaire est valide, crée un nouvel objet Appointment avec les données du formulaire et les informations de l'utilisateur connecté, puis redirige vers la page de consultation des rendez-vous. Si le formulaire n'est pas valide, l'affiche à nouveau. Si la méthode de la requête est GET, affiche un formulaire vide de rendez-vous. Si l'utilisateur connecté n'est pas un médecin, supprime le champ "client" du formulaire. 
-    Requiert que l'utilisateur soit connecté pour accéder à cette vue.
-        
-    Paramètres:
-        - request: l'objet requête HTTP envoyé par le navigateur
         
     Retour:
         - Un objet HttpResponse avec le modèle de rendu pour la page de création de rendez-vous, contenant le formulaire de rendez-vous. Si le formulaire n'est pas valide, affiche également les erreurs de validation du formulaire.
@@ -32,10 +28,9 @@ def create_appointment(request):
 
 def consult_appointment(request):
     """
-    Vue qui gère l'affichage des rendez-vous d'un utilisateur connecté.
+    Vue qui gère l'affichage des rendez-vous d'un client connecté.
 
-    Cette vue affiche les rendez-vous de l'utilisateur connecté en filtrant les rendez-vous stockés en base de données
-    avec le champ 'user' égal à l'utilisateur connecté.
+    Cette vue affiche les rendez-vous de l'utilisateur connecté en filtrant les rendez-vous stockés en base de données avec le champ 'user' égal à l'utilisateur connecté.
 
     Args:
         request: objet HttpRequest représentant la requête HTTP reçue.
@@ -51,15 +46,13 @@ def consult_appointment(request):
 @login_required
 def manage_appointment(request):
     """
-    Vue qui gère l'affichage des rendez-vous pour un utilisateur connecté.
-
-    Si l'utilisateur n'est pas connecté, il sera redirigé vers la page de connexion.
+    Vue qui gère l'affichage des rendez-vous pour le médecin.
 
     Args:
         request: objet HttpRequest représentant la requête HTTP reçue.
 
     Returns:
-        HttpResponse représentant la page HTML affichant la liste de tous les rendez-vous.
+        HttpResponse représentant la page HTML affichant la liste de tous les rendez-vous pris par les clients.
         Les rendez-vous sont passés à la page via le dictionnaire de contexte 'appointments'.
     """
     appointments = Appointment.objects.all()
@@ -67,6 +60,21 @@ def manage_appointment(request):
 
 @login_required
 def appointment_change(request, id):
+    """
+    Vue qui gère la modification d'un rendez-vous.
+
+    Args:
+        request: objet HttpRequest représentant la requête HTTP reçue.
+        id: identifiant unique du rendez-vous à modifier.
+
+    Returns:
+        HttpResponse représentant la page HTML pour la modification d'un rendez-vous.
+        Si le formulaire est valide et a été enregistré avec succès, l'utilisateur sera redirigé soit vers la page de gestion de rendez-vous (pour les médecins), soit vers la page de consultation de rendez-vous (pour les patients).
+        Si le formulaire n'est pas valide, l'utilisateur verra le formulaire de modification de rendez-vous avec les erreurs correspondantes.
+
+    Raises:
+        Appointment.DoesNotExist: si le rendez-vous avec l'identifiant spécifié n'existe pas en base de données.
+    """
     appointment = Appointment.objects.get(id=id)
     if request.method == 'POST':
         form = AppointmentForm(request.POST, instance=appointment)
@@ -88,24 +96,20 @@ def appointment_change(request, id):
  
 @login_required   
 def appointment_delete(request, id):
-    """
-    Vue qui gère la modification d'un rendez-vous.
-
-    Si l'utilisateur n'est pas connecté, il sera redirigé vers la page de connexion.
+    """Supprime un rendez-vous existant.
 
     Args:
-        request: objet HttpRequest représentant la requête HTTP reçue.
-        id: identifiant unique du rendez-vous à modifier.
+        id (int): l'identifiant unique du rendez-vous à supprimer.
 
     Returns:
-        HttpResponse représentant la page HTML pour la modification d'un rendez-vous.
-        Si le formulaire est valide et a été enregistré avec succès, l'utilisateur sera redirigé soit vers
-        la page de gestion de rendez-vous (pour les médecins), soit vers la page de consultation de rendez-vous (pour les patients).
-        Si le formulaire n'est pas valide, l'utilisateur verra le formulaire de modification de rendez-vous avec les erreurs correspondantes.
+        HttpResponse : une réponse HTTP redirigeant l'utilisateur en fonction de son rôle.
+
+        Si la requête est une méthode POST et que le rendez-vous a été supprimé avec succès, les utilisateurs avec le rôle "MEDECIN" sont redirigés vers la page de gestion de rendez-vous ('manage'), tandis que les autres utilisateurs sont redirigés vers la page de consultation de rendez-vous ('consult').
 
     Raises:
-        Appointment.DoesNotExist: si le rendez-vous avec l'identifiant spécifié n'existe pas en base de données.
+        Appointment.DoesNotExist : si aucun rendez-vous correspondant à l'identifiant fourni n'a été trouvé.
     """
+   
     appointment = Appointment.objects.get(id=id)
 
     if request.method == 'POST':
@@ -121,16 +125,14 @@ def appointment_delete(request, id):
 @login_required   
 def appointment_detail(request, id):
     """
-    Vue qui gère l'affichage d'un rendez-vous et des notes qui lui sont associées.
-
-    Si l'utilisateur n'est pas connecté, il sera redirigé vers la page de connexion.
+    Vue qui gère l'affichage des notes qui sont associées au client qui a pris le rendez-vous.
 
     Args:
         request: objet HttpRequest représentant la requête HTTP reçue.
         id: identifiant unique du rendez-vous à afficher.
 
     Returns:
-        HttpResponse représentant la page HTML pour l'affichage d'un rendez-vous et des notes qui lui sont associées.
+        HttpResponse représentant la page HTML pour l'affichage de l'historique du client du rendez-vous et des notes qui lui sont associées.
         Les informations du rendez-vous, les notes associées, ainsi que le formulaire de création de notes sont passés à la page via le dictionnaire de contexte.
 
     Raises:
